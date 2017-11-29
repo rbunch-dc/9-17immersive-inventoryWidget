@@ -4,6 +4,7 @@ import React, { Component } from 'react';
 // import our own components
 import productData from './productData';
 import ProductCategoryRow from './ProductCategoryRow';
+import ProductRow from './ProductRow';
 // console.log(productData);
 
 class ProductTable extends Component{
@@ -46,7 +47,7 @@ class ProductTable extends Component{
 			rows.push(<ProductCategoryRow key={key} header={key} />);
 			// Internal map through THIS category.
 			this.state.productsByCategory[key].map((item,index)=>{
-
+				rows.push(<ProductRow key={item.name} item={item} />)
 			});
 		};
 		return (
