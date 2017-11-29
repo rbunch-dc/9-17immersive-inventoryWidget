@@ -37,17 +37,24 @@ class ProductTable extends Component{
 	render(){
 		// Init a local var to hold our product rows
 		var rows = [];
+		// Outter for loop, is going through teh categories.
+		// I.e, "Sporting Goods", and "Electronics"
+		// It will run as many times as there are categories
 		for(var key in this.state.productsByCategory){
 			// console.log(key1);
 			console.log(this.state.productsByCategory[key]);
-			rows.push(<ProductCategoryRow header={key} />);
-		}
+			rows.push(<ProductCategoryRow key={key} header={key} />);
+			// Internal map through THIS category.
+			this.state.productsByCategory[key].map((item,index)=>{
+
+			});
+		};
 		return (
 			<div className="product-table">
 				<table className="table table-striped">
 					<thead>
 						<tr>
-							<th>Head</th>
+							<th>Name</th>
 							<th>Price</th>
 						</tr>
 					</thead>
