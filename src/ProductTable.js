@@ -2,7 +2,8 @@
 import React, { Component } from 'react';
 
 // import our own components
-import productData from './productData'
+import productData from './productData';
+import ProductCategoryRow from './ProductCategoryRow';
 // console.log(productData);
 
 class ProductTable extends Component{
@@ -39,6 +40,7 @@ class ProductTable extends Component{
 		for(var key in this.state.productsByCategory){
 			// console.log(key1);
 			console.log(this.state.productsByCategory[key]);
+			rows.push(<ProductCategoryRow header={key} />);
 		}
 		return (
 			<div className="product-table">
@@ -51,6 +53,7 @@ class ProductTable extends Component{
 					</thead>
 					<tbody>
 					{/*products go here*/}
+					{rows}
 					</tbody>
 				</table>
 			</div>
