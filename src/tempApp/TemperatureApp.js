@@ -29,7 +29,8 @@ class TemperatureApp extends Component{
 	constructor(){
 		super();
 		this.state = {
-			temperature: ''
+			temperature: 32,
+			scale: "c"
 		}
 		this.handleCelciusChange = this.handleCelciusChange.bind(this); 	
 		this.handleFahrenheitChange = this.handleFahrenheitChange.bind(this);
@@ -37,22 +38,57 @@ class TemperatureApp extends Component{
 
 	handleCelciusChange(value){
 		console.log("Someone changed the Celcius Input to " + value)
+		this.setState({
+			scale: "c",
+			temperature: value
+		})
 	}
 
 	handleFahrenheitChange(value){
 		console.log("Someone changed the Fahrenheit Input to "+value)
+		this.setState({
+			scale: "f",
+			temperature: value
+		})
+	}
+
+	handleKevlinChange(value){
+		this.setState({
+			scale: "k",
+			temperature: value
+		})
 	}
 
 	render(){
+		// Set up some local vars to save on typing
+		const scale = this.state.scale;
+		const temperature = this.state.temperature;
+
+		if(scale === "c"){
+			// Convert celcius temp to f
+			var fTemp = tryConvert(temperature,toFahrenheit)
+			// No need to convert, it's already in celcius
+			var cTemp = temperature;
+		}else if(scale === "f"){
+			// no need to convert, it's already in f
+			var fTemp = temperature;
+			// try and convert f to celcisu
+			var cTemp = tryConvert(temperature,toCelsius)
+		}else if(scale === "k"){
+			// no need to convert, it's already in f
+			var fTemp = temperature;
+			// try and convert f to celcisu
+			var cTemp = tryConvert(temperature,toCelsius)
+		}
 
 		// console.log(tryConvert("sadfsdafd100",toFahrenheit));
 
 		// var temperature = this.state.temperature;
 		return(
-			<div>
-				<TemperatureInput scale="f" onChange={this.handleFahrenheitChange} />
-				<TemperatureInput scale="c" onChange={this.handleCelciusChange} />
-				{/*<BoilingVerdict celsius={parseFloat(temperature)}/>*/}
+			<div id="temp-app">
+				<TemperatureInput scale="f" temperature={fTemp} onChange={this.handleFahrenheitChange} />
+				<TemperatureInput scale="c" temperature={cTemp} onChange={this.handleCelciusChange} />
+				<BoilingVerdict temperature={parseFloat(cTemp)}/>
 			</div>
 		)
 	}
