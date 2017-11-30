@@ -2,7 +2,7 @@
 import React, { Component } from 'react';
 
 // import our own components
-import safeProductData from './productData';
+import productData from './productData';
 import ProductCategoryRow from './ProductCategoryRow';
 import ProductRow from './ProductRow';
 // console.log(productData);
@@ -10,7 +10,9 @@ import ProductRow from './ProductRow';
 class ProductTable extends Component{
 	constructor(){
 		super();
-		this.productData = safeProductData;
+		this.safeProductData = Object.assign({},productData)
+		// this.safeProductData = {...productData}
+		this.productData = productData;
 		this.state = {
 			productsByCategory: {}
 		}
@@ -24,15 +26,13 @@ class ProductTable extends Component{
 		console.log(newProps);
 		const searchTerm = newProps.searchTerm.toLowerCase();
 		var tempProducts = [];
-		for(let i = 0; i < safeProductData.data.length; i++ ){
-			const item = safeProductData.data[i];
+		this.safeProductData.data.map((item)=>{
 			const itemName = item.name.toLowerCase();
-			// console.log(itemName)
-			if(itemName.indexOf(searchTerm) !== -1){
+			console.log(itemName)
+			if(itemName.indexOf(searchTerm) != -1){
 				tempProducts.push(item)
-			}			
-		}
-		console.log(safeProductData.data);
+			}
+		});
 		this.productData.data = tempProducts;
 		this.formatData();
 	}
